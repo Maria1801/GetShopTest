@@ -18,10 +18,10 @@ export default function Home() {
           display: "flex",
           flexDirection: "column",
           gap: "200px",
-          "@media (min-width: 1024px)": {
+          "@media (minWidth: 1024px)": {
             gap: "300px",
           },
-          "@media (min-width: 768px)": {
+          "@media (minWidth: 768px)": {
             gap: "240px",
           },
         }}

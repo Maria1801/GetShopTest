@@ -1,13 +1,13 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, ReactNode, FC } from 'react';
 
-const ActiveSectionContext = createContext<{
+interface ActiveSectionContextType {
   activeSection: string | null;
   setActiveSection: React.Dispatch<React.SetStateAction<string | null>>;
-} | null>(null);
+}
 
-export const ActiveSectionProvider: React.FC<{ children: ReactNode }> = ({
-  children,
-}) => {
+const ActiveSectionContext = createContext<ActiveSectionContextType | null>(null);
+
+export const ActiveSectionProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [activeSection, setActiveSection] = useState<string | null>(null);
 
   return (
@@ -20,9 +20,7 @@ export const ActiveSectionProvider: React.FC<{ children: ReactNode }> = ({
 export const useActiveSection = () => {
   const context = useContext(ActiveSectionContext);
   if (!context) {
-    throw new Error(
-      'useActiveSection must be used within an ActiveSectionProvider'
-    );
+    throw new Error('useActiveSection must be used within an ActiveSectionProvider');
   }
   return context;
 };

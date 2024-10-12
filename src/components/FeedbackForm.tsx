@@ -1,80 +1,135 @@
-import Link from 'next/link';
-import ButtonBlack from './shared/buttons/ButtonBlack';
-import { useState } from 'react';
-import classNames from 'classnames';
-import CheckBoxFill from './shared/icons/CheckBoxFill';
-import CheckBoxEmpty from './shared/icons/CheckBoxEmpty';
+import Link from "next/link";
+import ButtonBlack from "./shared/buttons/ButtonBlack";
+import { useState } from "react";
+import classNames from "classnames";
+import CheckBoxFill from "./shared/icons/CheckBoxFill";
+import CheckBoxEmpty from "./shared/icons/CheckBoxEmpty";
 
 export default function FeedbackForm() {
   const [isChecked, setIsChecked] = useState<boolean>(false);
-  const [userEmail, setUserEmail] = useState<string>('');
-  const [question, setQuestion] = useState<string>('');
-  const [errorMessage, setErrorMessage] = useState<string>('');
+  const [userEmail, setUserEmail] = useState<string>("");
+  const [question, setQuestion] = useState<string>("");
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
   const handleSubmitForm = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!userEmail) {
-      setErrorMessage('Введите e-mail');
+      setErrorMessage("Введите e-mail");
       return;
     }
 
     if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(userEmail)) {
-      setErrorMessage('Неверный формат e-mail');
+      setErrorMessage("Неверный формат e-mail");
       return;
     }
 
     if (!question) {
-      setErrorMessage('Введите ваш вопрос');
+      setErrorMessage("Введите ваш вопрос");
       return;
     }
 
-    // fetch(...)
-    setErrorMessage('');
+    setErrorMessage("");
   };
 
   return (
-    <section className="mx-auto flex w-full max-w-[1220px] flex-col gap-[32px] px-[16px] pb-[80px] md:px-[40px] lg:gap-[64px] lg:px-0">
-      <h2 className="text-heading-base font-bold">Заполните форму</h2>
+    <section
+      style={{
+        margin: "0 auto",
+        display: "flex",
+        width: "100%",
+        maxWidth: "1220px",
+        flexDirection: "column",
+        gap: "32px",
+        paddingLeft: "16px",
+        paddingRight: "16px",
+        paddingBottom: "120px",
+      }}
+    >
+      <h2 style={{ fontSize: "2rem", paddingBottom: "40px", fontWeight: "bold" }}>Заполните форму</h2>
 
       <form onSubmit={handleSubmitForm}>
-        <div className="flex w-full flex-col gap-[40px] lg:flex-row">
+        <div
+          style={{
+            display: "flex",
+            width: "100%",
+            flexDirection: "row",
+            gap: "40px",
+          }}
+        >
           <textarea
             placeholder="Напишите свой вопрос"
             value={question}
-            onChange={e => setQuestion(e.target.value)}
-            className="h-[216px] w-full resize-none rounded-[12px] bg-transparent p-3 outline outline-2 outline-slate-gray transition-all duration-300 ease-in-out focus:outline-black"
+            onChange={(e) => setQuestion(e.target.value)}
+            style={{
+              height: "216px",
+              width: "100%",
+              resize: "none",
+              borderRadius: "12px",
+              backgroundColor: "transparent",
+              padding: "12px",
+              outline: "2px solid slategray",
+              transition: "all 300ms ease-in-out",
+            }}
+            onFocus={(e) => (e.target.style.outlineColor = "black")}
           />
-          <div className="flex flex-col gap-[32px] md:gap-[64px] lg:gap-[48px]">
-            <div className="flex flex-col gap-[32px]">
-              <div className="flex flex-col gap-3">
+          <div
+            style={{ display: "flex", flexDirection: "column", gap: "48px" }}
+          >
+            <div
+              style={{ display: "flex", flexDirection: "column", gap: "32px" }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "12px",
+                }}
+              >
                 <input
                   placeholder="Введите e-mail"
-                  onChange={e => setUserEmail(e.target.value)}
+                  onChange={(e) => setUserEmail(e.target.value)}
                   value={userEmail}
-                  className={classNames(
-                    'w-full border-b-2 bg-transparent py-3 outline-none transition-all duration-300 ease-in-out',
-                    {
-                      'border-error focus:border-error': errorMessage,
-                      'border-slate-gray focus:border-black': !errorMessage,
-                    }
-                  )}
+                  style={{
+                    width: "100%",
+                    borderBottom: `2px solid ${
+                      errorMessage ? "red" : "slategray"
+                    }`,
+                    backgroundColor: "transparent",
+                    padding: "12px 0",
+                    outline: "none",
+                    transition: "border-color 300ms ease-in-out",
+                  }}
+                  onFocus={(e) => (e.target.style.borderBottomColor = "black")}
+                  onBlur={(e) =>
+                    !errorMessage
+                      ? (e.target.style.borderBottomColor = "slategray")
+                      : null
+                  }
                 />
                 {errorMessage && (
-                  <p className="text-body-md text-error">{errorMessage}</p>
+                  <p style={{ fontSize: "1rem", color: "red" }}>
+                    {errorMessage}
+                  </p>
                 )}
               </div>
-              <div className="flex flex-row items-start gap-3">
-                <button type="button" onClick={() => setIsChecked(!isChecked)}>
+              <div
+                style={{ display: "flex", flexDirection: "row", gap: "12px" }}
+              >
+                <button
+                  type="button"
+                  onClick={() => setIsChecked(!isChecked)}
+                  style={{ cursor: "pointer" }}
+                >
                   {isChecked ? <CheckBoxFill /> : <CheckBoxEmpty />}
                 </button>
-                <p className="items-center text-body-md">
-                  Я ознакомлен(а) с{' '}
-                  <Link href="/" className="underline">
+                <p style={{ fontSize: "1rem" }}>
+                  Я ознакомлен(а) с{" "}
+                  <Link href="/" style={{ textDecoration: "underline" }}>
                     политикой конфиденциальности
-                  </Link>{' '}
-                  и согласен(на) на обработку{' '}
-                  <Link href={'/'} className="underline">
+                  </Link>{" "}
+                  и согласен(на) на обработку{" "}
+                  <Link href="/" style={{ textDecoration: "underline" }}>
                     персональных данных.
                   </Link>
                 </p>

@@ -68,15 +68,12 @@ export default function RevenueOptimization() {
           </div>
           <div className="grid grow grid-cols-1 place-items-center">
             <div className="relative flex h-[175px] w-0.5 flex-row bg-accent md:h-0.5 md:w-full">
-              {/* Верхний круг */}
               <div className="absolute left-1/2 top-0 h-3 w-3 -translate-x-1/2 transform rounded-full bg-accent md:left-0 md:top-1/2 md:-translate-y-1/2" />
 
-              {/* Логотип */}
               <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform">
                 {isDesktop ? <LogoIcon /> : <LogoIcon size={80} />}
               </div>
 
-              {/* Нижний круг */}
               <div className="absolute bottom-0 left-1/2 h-3 w-3 -translate-x-1/2 transform rounded-full bg-accent md:left-full md:right-0 md:top-1/2 md:-translate-y-1/2" />
             </div>
           </div>
